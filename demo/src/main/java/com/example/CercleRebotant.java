@@ -1,9 +1,13 @@
 package com.example;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 // Classe que representa un panell on es dibuixa un cercle que rebota
 public class CercleRebotant extends JPanel implements ActionListener {
@@ -49,18 +53,5 @@ public class CercleRebotant extends JPanel implements ActionListener {
         y += dy;
 
         repaint(); // Redibuixa el panell per actualitzar la posició del cercle
-    }
-
-    // Mètode principal per iniciar l'aplicació
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Cercle Rebotant"); // Crea la finestra
-            CercleRebotant panel = new CercleRebotant(); // Crea una instància del panell
-            frame.add(panel); // Afegeix el panell a la finestra
-            frame.setSize(400, 400); // Defineix la mida de la finestra
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Configura el tancament
-            frame.setLocationRelativeTo(null); // Centra la finestra a la pantalla
-            frame.setVisible(true); // Mostra la finestra
-        });
     }
 }
