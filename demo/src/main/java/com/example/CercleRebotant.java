@@ -22,6 +22,9 @@ public class CercleRebotant extends JPanel implements ActionListener {
     private Timer timer; // Temporitzador per controlar l'animació
     private Jugador jugador1; // Juagdor Izquierda
     private Jugador jugador2; // Jugador Derecho
+    private static final int HEIGHT = 100;
+    private static final int WIDTH = 50;
+
 
     // Constructor que inicialitza el panell i inicia el temporitzador
     public CercleRebotant() {
@@ -43,10 +46,10 @@ public class CercleRebotant extends JPanel implements ActionListener {
 
 
         g2d.setColor(jugador1.getBackground());
-        g2d.fillRect(jugador1.x, jugador1.y, jugador1.x, jugador1.y); // Paleta del jugador 1 c
+        g2d.fillRect(jugador1.x, jugador1.y, WIDTH, HEIGHT); // Paleta del jugador 1 c
 
         g2d.setColor(jugador2.getBackground());
-        g2d.fillRect(jugador2.x, jugador2.y, jugador2.x, jugador2.y);
+        g2d.fillRect(jugador2.x, jugador2.y, WIDTH, HEIGHT);
 
     }
 
