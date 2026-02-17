@@ -1,10 +1,7 @@
 package com.example;
 
-import java.awt.Color;
 
-import javax.swing.JFrame;
-
-public class Jugador extends JFrame {
+public class Jugador {
     public int y;
     public int x;
     
@@ -13,6 +10,5 @@ public class Jugador extends JFrame {
         this.y = y;
         this.x = x;
 
-        this.setBackground(Color.BLACK);        
     }
 }

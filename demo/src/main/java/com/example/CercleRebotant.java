@@ -45,10 +45,8 @@ public class CercleRebotant extends JPanel implements ActionListener {
         g2d.fillOval(x, y, RADI * 2, RADI * 2); // Dibuixa el cercle amb les coordenades i el radi
 
 
-        g2d.setColor(jugador1.getBackground());
         g2d.fillRect(jugador1.x, jugador1.y, WIDTH, HEIGHT); // Paleta del jugador 1 c
 
-        g2d.setColor(jugador2.getBackground());
         g2d.fillRect(jugador2.x, jugador2.y, WIDTH, HEIGHT);
 
     }
