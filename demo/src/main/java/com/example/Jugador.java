@@ -2,12 +2,12 @@ package com.example;
 
 public class Jugador {
     public int y;
-    public int altura;
+    public int x;
     
    
-    public Jugador(int y, int altura) {
+    public Jugador(int y, int x) {
         this.y = y;
-        this.altura = altura;
+        this.x = x;
         
     }
 }
