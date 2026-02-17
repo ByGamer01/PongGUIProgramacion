@@ -6,12 +6,15 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 // Classe que representa un panell on es dibuixa un cercle que rebota
 public class CercleRebotant extends JPanel implements ActionListener {
 
+    private final boolean raised = false;
     private int x = 50, y = 50; // Coordenades inicials del cercle
     private int dx = 2, dy = 2; // Velocitat del moviment en X i Y
     private final int RADI = 20; // Radi del cercle
@@ -25,6 +28,9 @@ public class CercleRebotant extends JPanel implements ActionListener {
         setBackground(Color.WHITE); // Defineix el color de fons del panell
         timer = new Timer(DELAY, this); // Crea el temporitzador amb retard especificat
         timer.start(); // Inicia el temporitzador
+
+        jugador1 = new Jugador(100, 50);
+        jugador2 = new Jugador(100, 100);
     }
 
     // Mètode per dibuixar el cercle dins del panell
@@ -35,7 +41,12 @@ public class CercleRebotant extends JPanel implements ActionListener {
         g2d.setColor(Color.RED); // Defineix el color del cercle
         g2d.fillOval(x, y, RADI * 2, RADI * 2); // Dibuixa el cercle amb les coordenades i el radi
 
-        g2d.
+
+        g2d.setColor(jugador1.getBackground());
+        g2d.fillRect(jugador1.x, jugador1.y, jugador1.x, jugador1.y); // Paleta del jugador 1 c
+
+        g2d.setColor(jugador2.getBackground());
+        g2d.fillRect(jugador2.x, jugador2.y, jugador2.x, jugador2.y);
 
     }
 
@@ -59,4 +70,17 @@ public class CercleRebotant extends JPanel implements ActionListener {
 
         repaint(); // Redibuixa el panell per actualitzar la posició del cercle
     }
+     public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Cercle Rebotant"); // Crea la finestra
+            CercleRebotant panel = new CercleRebotant(); // Crea una instància del panell
+            frame.add(panel); // Afegeix el panell a la finestra
+
+            frame.setSize(1920, 1080); // Defineix la mida de la finestra
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Configura el tancament de la finestra
+            frame.setLocationRelativeTo(null); // Centra la finestra a la pantalla
+            frame.setVisible(true); // Mostra la finestra
+        });
+    }
+
 }

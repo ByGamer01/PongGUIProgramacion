@@ -11,11 +11,10 @@ public class Pong extends JFrame implements ActionListener, KeyListener {
     private CercleRebotant panel; // Pelota
 
     public Pong() {
-        setSize(null);
+        setSize(1000, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setDefaultLookAndFeelDecorated(true);
         setTitle("Pong - Java Swing | David Gil");
-
 
     }
 
@@ -43,9 +42,6 @@ public class Pong extends JFrame implements ActionListener, KeyListener {
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 
-    public static void main(String[] args) {
-        new Pong();
-    }
 }
 /*
  * En primer lugar, pensé en hacer uso del LayeredPane, pero no se puede volver
