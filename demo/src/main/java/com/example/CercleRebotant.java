@@ -17,6 +17,8 @@ public class CercleRebotant extends JPanel implements ActionListener {
     private final int RADI = 20; // Radi del cercle
     private final int DELAY = 10; // Retard del temporitzador en mil·lisegons
     private Timer timer; // Temporitzador per controlar l'animació
+    private Jugador jugador1; // Juagdor Izquierda
+    private Jugador jugador2; // Jugador Derecho
 
     // Constructor que inicialitza el panell i inicia el temporitzador
     public CercleRebotant() {
@@ -32,6 +34,7 @@ public class CercleRebotant extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g; // Conversió a Graphics2D per millorar el dibuix
         g2d.setColor(Color.RED); // Defineix el color del cercle
         g2d.fillOval(x, y, RADI * 2, RADI * 2); // Dibuixa el cercle amb les coordenades i el radi
+        
     }
 
     // Mètode que s'executa a cada tic del temporitzador per moure el cercle

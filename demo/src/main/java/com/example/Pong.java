@@ -9,14 +9,14 @@ import javax.swing.JFrame;
 
 public class Pong extends JFrame implements ActionListener, KeyListener {
     private CercleRebotant panel; // Pelota
-    private Jugador jugador1; // Juagdor Izquierda
-    private Jugador jugador2; // Jugador Derecho
 
     public Pong() {
         setSize(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setDefaultLookAndFeelDecorated(true);
         setTitle("Pong - Java Swing | David Gil");
+
+
     }
 
     @Override
