@@ -15,7 +15,6 @@ public class Pong extends JFrame implements ActionListener, KeyListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setDefaultLookAndFeelDecorated(true);
         setTitle("Pong - Java Swing | David Gil");
-
     }
 
     @Override
