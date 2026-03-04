@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 public class Pong extends JFrame implements ActionListener, KeyListener {
-    private CercleRebotant panel; // Pelota
+    private GamePanel panel; // Pelota
 
     public Pong() {
         setSize(1000, 1000);
