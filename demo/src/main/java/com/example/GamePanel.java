@@ -53,8 +53,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g2d.setColor(Color.RED); // Defineix el color del cercle
         g2d.fillOval(x, y, RADI * 2, RADI * 2); // Dibuixa el cercle amb les coordenades i el radi
 
+        jugador2.setX(getWidth() - jugador2.getWidth() - 25); // Para evitar un bug donde la bola se comia la mitad de
+                                                              // la pala antes de rebotar
+
         jugador1.draw(g2d); // Este es nuestro metodo draw que hay dentro de la clase Jugador
         jugador2.draw(g2d);
+
+        // Marcador de la pUntuacion
+        // Dividimos la pantalla en 4, dos para el jugador 1 y dos para el jugador2
+        g2d.drawString("Jugador 1: " + score1, getWidth() / 4, 30);
+        g2d.drawString("Jugador 2: " + score2, 3 * getWidth() / 4, 30);
+        g2d.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight()); // linea para separar los campos
 
     }
 
@@ -108,6 +117,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 && y + 2 * RADI >= jugador1.getY()
                 && y <= jugador1.getY() + jugador1.getHeight()) {
             dx = -dx; // Rebota
+
+            // Gol del jugador2 (porteria de la izquierda y paleta del jugador1)
+        } else if (x <= 0) { // Bug antes; Imagina que la pelota pasa la pala izquierda y llega a x = -5
+            // Se ejecutaban las dos cosas a la vez. La pelota rebota y marca gol al mismo
+            // tiempo.
+            // Necesitas que sean excluyentes: si es gol, no hay colisión.
+            score2++;
+            x = getWidth() / 2;// PAra que la bola aparezca en el centro del campo
+            y = getHeight() / 2;// Es decir, para que se reinicien las coordenadas del nuevo frame
         }
 
         // Colisión con pala DERECHA
@@ -116,7 +134,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 && y <= jugador2.getY() + jugador2.getHeight()) // pelota no está por DEBAJO de la pala
         {
             dx = -dx;
+
+            // Gol del Jugador1 (porteria derecha y pala del jugador2)
+        } else if (x + 2 * RADI >= getWidth()) { // Si no ponia el else if, habia un tremendo bug
+            score1++;
+            x = getWidth() / 2;
+            y = getHeight() / 2;
         }
+
         /*
          * El lado derecho de la pelota ha llegado al lado izquierdo de la pala
          * -> hay contacto horizontal (primera condicion)
@@ -126,11 +151,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
          * 
          * La parte superior de la pelota está por encima del borde inferior de la pala
          * -> la pelota no está completamente por debajo (tercera condicion)
-        */
-
-        // CONDICION DE LA PUNTUACION Y REINICIO DEL SPAWN POINT DE LA BOLA
-        // 4. ¿Y si no tocó ninguna pala y salió por la izquierda? → gol
-        // 5. ¿Y si salió por la derecha? → gol
+         * 
+         * 
+         * La pelota no "se mueve" realmente. Cada frame se borra todo (eso hace
+         * super.paintComponent(g)) y se vuelve a dibujar en la nueva posición. Es como
+         * un flipbook: cada página es un dibujo nuevo.
+         * 
+         * el lado derecho de la pelota es x + 2 * RADI
+         * y el borde derecho del panel es getWidth()
+         * 
+         */
 
         x += dx;
         y += dy;

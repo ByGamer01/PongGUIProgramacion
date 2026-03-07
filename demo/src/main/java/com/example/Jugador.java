@@ -40,16 +40,25 @@ public class Jugador {
     public int getX() {
         return this.x;
     }
+
     public int getY() {
         return this.y;
     }
+
     public int getHeight() {
         return this.height;
     }
+
     public int getVelocidad() {
         return this.velocidad;
     }
+
     public int getWidth() {
         return this.width;
+    }
+
+    // Setters
+    public void setX(int x) {
+        this.x = x;
     }
 }
