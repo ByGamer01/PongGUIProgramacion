@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private String nombre1; // jugador1
     private String nombre2; // jugador2
     private BufferedImage fondo; // para poner una imagen en el fondo personalizada jejeje vi un par de videos
+    private boolean primerFrame = true; // para que la bola no aparezca en el 0,0
 
     // Constructor que inicialitza el panell i inicia el temporitzador
     public GamePanel(String nombre1, String nombre2) {
@@ -68,6 +69,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         } else {
             super.paintComponent(g);
         }
+        if (primerFrame) { // hacemos que la bola se inicialice o salga en el medio de la pantalla en vez
+                           // de en el 0,0
+            x = getWidth() / 2;
+            y = getHeight() / 2;
+            primerFrame = false;
+        }
         g2d.setColor(Color.RED); // Defineix el color del cercle
         g2d.fillOval(x, y, RADI * 2, RADI * 2); // Dibuixa el cercle amb les coordenades i el radi
 
@@ -79,7 +86,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         // Marcador de la pUntuacion
         // Dividimos la pantalla en 4, dos para el jugador 1 y dos para el jugador2
-        g2d.setFont(new Font("Arial", Font.BOLD, 30)); // ponemos una fuente, y buen tamaño para que se vea la puntuacion
+        g2d.setFont(new Font("Arial", Font.BOLD, 30)); // ponemos una fuente, y buen tamaño para que se vea la
+                                                       // puntuacion
         g2d.setColor(Color.WHITE);
         g2d.drawString(nombre1 + score1, getWidth() / 4, 30);
         g2d.drawString(nombre2 + score2, 3 * getWidth() / 4, 30);
@@ -135,6 +143,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 && y + 2 * RADI >= jugador1.getY()
                 && y <= jugador1.getY() + jugador1.getHeight()) {
             dx = -dx; // Rebota
+            x = jugador1.getX() + jugador1.getWidth(); // para que la bola no llegue hasta la mitad de la pala.
+            // esto es para recolocar la pelota justo al borde de la pala después de
+            // rebotar.
 
             // Gol del jugador2 (porteria de la izquierda y paleta del jugador1)
         } else if (x <= 0) { // Bug antes; Imagina que la pelota pasa la pala izquierda y llega a x = -5
@@ -152,6 +163,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 && y <= jugador2.getY() + jugador2.getHeight()) // pelota no está por DEBAJO de la pala
         {
             dx = -dx;
+            x = jugador2.getX() - 2 * RADI;// para que la bola no llegue hasta la mitad de la pala.
+            // esto es para recolocar la pelota justo al borde de la pala después de
+            // rebotar.
 
             // Gol del Jugador1 (porteria derecha y pala del jugador2)
         } else if (x + 2 * RADI >= getWidth()) { // Si no ponia el else if, habia un tremendo bug

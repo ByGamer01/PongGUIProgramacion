@@ -53,7 +53,6 @@ public class MenuInicial extends JFrame {
             }
         });
         
-        pack();
         setVisible(true);
     }
 
