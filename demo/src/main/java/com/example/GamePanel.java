@@ -23,17 +23,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Timer timer; // Temporitzador per controlar l'animació
     private Jugador jugador1; // Juagdor Izquierda
     private Jugador jugador2; // Jugador Derecho
-    private static final int HEIGHT = 100;
-    private static final int WIDTH = 50;
     private int score1 = 0; // Puntuacion del jugador 1
     private int score2 = 0; // puntuacion del jugador 2
-
-
-    // Variables de Los jugadores (de sus paletas o palas)
-    private int jx1 = 25;
-    private int jy1 = 50;
-    private int jx2 = 1450;
-    private int jy2 = 50;
 
     // Constructor que inicialitza el panell i inicia el temporitzador
     public GamePanel() {
@@ -41,12 +32,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         timer = new Timer(DELAY, this); // Crea el temporitzador amb retard especificat
         timer.start(); // Inicia el temporitzador
         // y = altura ; x = ancho
-        //                 x     y
+        // x y
         // frame.setSize(1920, 1080); // Defineix la mida de la finestra
-        // El frame mide todo eso, por lo que a la hora de distribuir las posiciones iniciales de los jugadores, 
+        // El frame mide todo eso, por lo que a la hora de distribuir las posiciones
+        // iniciales de los jugadores,
         // tenemos que tenerlas en cuenta
-        jugador1 = new Jugador(jy1, jx1);
-        jugador2 = new Jugador(jy2, jx2); // Para mi pantalla, se ve perfecto asi.
+        // La clase jugador ya tiene todo lo necesario jeje
+        jugador1 = new Jugador(25, 50, 50, 100, 15);
+        jugador2 = new Jugador(1450, 50, 50, 100, 15);
+
         setFocusable(true);
         addKeyListener(this);
     }
@@ -59,26 +53,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g2d.setColor(Color.RED); // Defineix el color del cercle
         g2d.fillOval(x, y, RADI * 2, RADI * 2); // Dibuixa el cercle amb les coordenades i el radi
 
-        g2d.fillRect(jx1, jy1, WIDTH, HEIGHT); // Paleta del jugador 1 c
-
-        g2d.fillRect(jx2, jy2, WIDTH, HEIGHT);
+        jugador1.draw(g2d); // Este es nuestro metodo draw que hay dentro de la clase Jugador
+        jugador2.draw(g2d);
 
     }
 
+    // Utilizamos los metodos especificos que tenemos en nuestra clase jugador, asi
+    // los tenemos mas ordenados
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             if (e.getKeyCode() == KeyEvent.VK_W) {
-                jy1 -= 15;
+                jugador1.moveUp();
             }
             if (e.getKeyCode() == KeyEvent.VK_S) {
-                jy1 += 15;
+                jugador1.moveDown();
             }
             if (e.getKeyCode() == KeyEvent.VK_UP) {
-                jy2 -= 15;
+                jugador2.moveUp();
             }
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                jy2 += 15;
+                jugador2.moveDown();
             }
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 score1 = 0;
@@ -99,29 +94,50 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     // Mètode que s'executa a cada tic del temporitzador per moure el cercle
+    // Este es el metodo para las colisiones
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        // Comprova si el cercle toca les vores horitzontals
-        if (x + 2 * RADI >= getWidth() || x <= 0) {
-            dx = -dx; // Inverteix la direcció horitzontal
-        }
-
-        // Comprova si el cercle toca les vores verticals
+        // Rebote vertical (techo y suelo)
         if (y + 2 * RADI >= getHeight() || y <= 0) {
-            dy = -dy; // Inverteix la direcció vertical
+            dy = -dy;
         }
 
-        // Actualitza la posició del cercle
+        // Colisión con pala IZQUIERDA (las 3 condiciones JUNTAS)
+        if (x <= jugador1.getX() + jugador1.getWidth()
+                && y + 2 * RADI >= jugador1.getY()
+                && y <= jugador1.getY() + jugador1.getHeight()) {
+            dx = -dx; // Rebota
+        }
+
+        // Colisión con pala DERECHA
+        if (x + 2 * RADI >= jugador2.getX() // pelota llega a la pala horizontalmente
+                && y + 2 * RADI >= jugador2.getY() // pelota no está por ENCIMA de la pala
+                && y <= jugador2.getY() + jugador2.getHeight()) // pelota no está por DEBAJO de la pala
+        {
+            dx = -dx;
+        }
+        /*
+         * El lado derecho de la pelota ha llegado al lado izquierdo de la pala
+         * -> hay contacto horizontal (primera condicion)
+         * 
+         * La parte inferior de la pelota está por debajo del borde superior de la pala
+         * -> la pelota no está completamente por encima (segunda condicion)
+         * 
+         * La parte superior de la pelota está por encima del borde inferior de la pala
+         * -> la pelota no está completamente por debajo (tercera condicion)
+        */
+
+        // CONDICION DE LA PUNTUACION Y REINICIO DEL SPAWN POINT DE LA BOLA
+        // 4. ¿Y si no tocó ninguna pala y salió por la izquierda? → gol
+        // 5. ¿Y si salió por la derecha? → gol
+
         x += dx;
         y += dy;
 
-        repaint(); // Redibuixa el panell per actualitzar la posició del cercle
+        repaint();
+
     }
-
-    
-
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -138,24 +154,30 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 }
 
-/* 
-Estructura de Carpetas: 27/02 - Diario de Abordo
-
-· Assets:
-
-../assets/background -> Imagenes de fondo, para personalizarlo mas
-../assets/choose-game -> en realidad este podria estar ubicado dentro de la carpeta de background, 
-existe para que en el selector de fondo, cada imagen te salga; aunque en realidad no la necesito
-../assets/icon -> para el icono, no me gusta el de Java. A mi me gusta currarmelo.
-
-· Src (es como 'lib'):
-../src/
-../src/main/java/com/example/GamePanel.java -> Panel principal del juego, donde los jugadores se enfrentan al 1 vs 1
-../src/main/java/com/example/Jugador.java -> Clase Jugador y/o Paleta
-../src/main/java/com/example/Pong.java -> Clase Principal para ejecutar el codigo (de momento)
-
-o ../../../../../../GamePanel.java 
-No estoy seguro, no suelo tener tantas carpetas a la hora de trabajar. En Dart lo optimizo mejor
-
-../pom.xml -> Para dependencias, e info del proyecto
-*/
+/*
+ * Estructura de Carpetas: 27/02 - Diario de Abordo
+ * 
+ * · Assets:
+ * 
+ * ../assets/background -> Imagenes de fondo, para personalizarlo mas
+ * ../assets/choose-game -> en realidad este podria estar ubicado dentro de la
+ * carpeta de background,
+ * existe para que en el selector de fondo, cada imagen te salga; aunque en
+ * realidad no la necesito
+ * ../assets/icon -> para el icono, no me gusta el de Java. A mi me gusta
+ * currarmelo.
+ * 
+ * · Src (es como 'lib'):
+ * ../src/
+ * ../src/main/java/com/example/GamePanel.java -> Panel principal del juego,
+ * donde los jugadores se enfrentan al 1 vs 1
+ * ../src/main/java/com/example/Jugador.java -> Clase Jugador y/o Paleta
+ * ../src/main/java/com/example/Pong.java -> Clase Principal para ejecutar el
+ * codigo (de momento)
+ * 
+ * o ../../../../../../GamePanel.java
+ * No estoy seguro, no suelo tener tantas carpetas a la hora de trabajar. En
+ * Dart lo optimizo mejor
+ * 
+ * ../pom.xml -> Para dependencias, e info del proyecto
+ */
