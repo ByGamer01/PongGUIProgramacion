@@ -17,7 +17,7 @@ import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     private int x = 50, y = 50; // Coordenades inicials del cercle
-    private int dx = 2, dy = 2; // Velocitat del moviment en X i Y
+    private int dx = 4, dy = 4; // Velocitat del moviment en X i Y // Velocidad a 4 para mas velocidad
     private final int RADI = 20; // Radi del cercle
     private final int DELAY = 10; // Retard del temporitzador en mil·lisegons
     private Timer timer; // Temporitzador per controlar l'animació
