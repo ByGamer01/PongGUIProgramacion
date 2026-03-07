@@ -20,14 +20,19 @@ public class Jugador {
 
     // Si y aumenta, bajas. Si y disminuye, subes (Lo habia hecho al reves)
 
-    public void moveUp() { // Siempre es la Y la que se mueve de arriba a abajo, ya que es la altura
-        // ¿cómo se mueve hacia arriba?
-        y = y - velocidad;
+    public void moveUp(int limiteArriba) { // Limite para que la pala no pueda superar el limite impuesto que sera 0 
+        y -= velocidad;
+        if (y < limiteArriba) {
+            y = limiteArriba;
+        }
     }
 
-    public void moveDown(int limiteAbajo) {
-        y += velocidad;
+    public void moveDown(int limiteAbajo) { // Limite para que la pala no pueda superar el limite que impongamos abajo
+                                            // que sera el getHeight()
+        y += velocidad; // mueve como estaba puesto antes
         if (y + height > limiteAbajo) {
+            // Condicion para que no pueda sobreposar el limite; si la altura de la pala es
+            // superior al limite de abajo entonces la y resta al limiteAbajo la altura
             y = limiteAbajo - height;
         }
     }

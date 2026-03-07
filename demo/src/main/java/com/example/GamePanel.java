@@ -73,16 +73,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             if (e.getKeyCode() == KeyEvent.VK_W) {
-                jugador1.moveUp();
+                jugador1.moveUp(0);
             }
             if (e.getKeyCode() == KeyEvent.VK_S) {
-                jugador1.moveDown();
+                jugador1.moveDown(getHeight());
             }
             if (e.getKeyCode() == KeyEvent.VK_UP) {
-                jugador2.moveUp();
+                jugador2.moveUp(0);
             }
             if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                jugador2.moveDown();
+                jugador2.moveDown(getHeight());
             }
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 score1 = 0;
