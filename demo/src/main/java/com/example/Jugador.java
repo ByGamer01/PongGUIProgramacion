@@ -25,10 +25,11 @@ public class Jugador {
         y = y - velocidad;
     }
 
-    public void moveDown() {
-        // ¿cómo se mueve hacia abajo?
-        y = y + velocidad;
-
+    public void moveDown(int limiteAbajo) {
+        y += velocidad;
+        if (y + height > limiteAbajo) {
+            y = limiteAbajo - height;
+        }
     }
 
     public void draw(Graphics2D g) {
