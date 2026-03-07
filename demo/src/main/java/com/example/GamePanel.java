@@ -1,17 +1,19 @@
 package com.example;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
+import javax.swing.*;
 
 // Classe que representa un panell on es dibuixa un cercle que rebota
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
@@ -25,9 +27,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Jugador jugador2; // Jugador Derecho
     private int score1 = 0; // Puntuacion del jugador 1
     private int score2 = 0; // puntuacion del jugador 2
+    private String nombre1; // jugador1
+    private String nombre2; // jugador2
+    private BufferedImage fondo; // para poner una imagen en el fondo personalizada jejeje vi un par de videos
 
     // Constructor que inicialitza el panell i inicia el temporitzador
-    public GamePanel() {
+    public GamePanel(String nombre1, String nombre2) {
+        this.nombre1 = nombre1;
+        this.nombre2 = nombre2;
         setBackground(Color.WHITE); // Defineix el color de fons del panell
         timer = new Timer(DELAY, this); // Crea el temporitzador amb retard especificat
         timer.start(); // Inicia el temporitzador
@@ -40,7 +47,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         // La clase jugador ya tiene todo lo necesario jeje
         jugador1 = new Jugador(25, 50, 50, 100, 15);
         jugador2 = new Jugador(1450, 50, 50, 100, 15);
-
+        try {
+            fondo = ImageIO.read(new File("demo/assets/background/fondo.png"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         setFocusable(true);
         addKeyListener(this);
     }
@@ -49,7 +60,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         Graphics2D g2d = (Graphics2D) g; // Conversió a Graphics2D per millorar el dibuix
+
+        if (fondo != null) { // fondo (imagen)
+            g2d.drawImage(fondo, 0, 0, getWidth(), getHeight(), null);
+        } else {
+            super.paintComponent(g);
+        }
         g2d.setColor(Color.RED); // Defineix el color del cercle
         g2d.fillOval(x, y, RADI * 2, RADI * 2); // Dibuixa el cercle amb les coordenades i el radi
 
@@ -61,10 +79,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         // Marcador de la pUntuacion
         // Dividimos la pantalla en 4, dos para el jugador 1 y dos para el jugador2
-        g2d.drawString("Jugador 1: " + score1, getWidth() / 4, 30);
-        g2d.drawString("Jugador 2: " + score2, 3 * getWidth() / 4, 30);
-        g2d.drawLine(getWidth() / 2, 0, getWidth() / 2, getHeight()); // linea para separar los campos
-
+        g2d.setFont(new Font("Arial", Font.BOLD, 30)); // ponemos una fuente, y buen tamaño para que se vea la puntuacion
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(nombre1 + score1, getWidth() / 4, 30);
+        g2d.drawString(nombre2 + score2, 3 * getWidth() / 4, 30);
     }
 
     // Utilizamos los metodos especificos que tenemos en nuestra clase jugador, asi
@@ -167,19 +185,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         repaint();
 
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Game Panel"); // Crea la finestra
-            GamePanel panel = new GamePanel(); // Crea una instància del panell
-            frame.add(panel); // Afegeix el panell a la finestra
-
-            frame.setSize(1920, 1080); // Defineix la mida de la finestra
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Configura el tancament de la finestra
-            frame.setLocationRelativeTo(null); // Centra la finestra a la pantalla
-            frame.setVisible(true); // Mostra la finestra
-        });
     }
 
 }

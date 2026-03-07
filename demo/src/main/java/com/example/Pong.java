@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class Pong extends JFrame implements ActionListener, KeyListener {
     private GamePanel panel; // Pelota
@@ -42,6 +43,12 @@ public class Pong extends JFrame implements ActionListener, KeyListener {
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new MenuInicial();
+        });
+    }
+
 }
 /*
  * En primer lugar, pensé en hacer uso del LayeredPane, pero no se puede volver
@@ -59,6 +66,9 @@ public class Pong extends JFrame implements ActionListener, KeyListener {
  * momento solo esta para Android, pero dentro de poco estará para IOS).
  * 
  * 
- * Pero es una pena, el enunciado del ejercicio pide explicitamente Java Swing, y Graphics2D de clase usada, por lo que tendria que usar paintComponent principalmente
- * Si fuera con Canvas de AWT, seria exclusivamente con AWT, Swing no tiene un ecosistema sostenible con AWT en el tema de los renderizados.
+ * Pero es una pena, el enunciado del ejercicio pide explicitamente Java Swing,
+ * y Graphics2D de clase usada, por lo que tendria que usar paintComponent
+ * principalmente
+ * Si fuera con Canvas de AWT, seria exclusivamente con AWT, Swing no tiene un
+ * ecosistema sostenible con AWT en el tema de los renderizados.
  */

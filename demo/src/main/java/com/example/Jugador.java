@@ -1,6 +1,8 @@
 package com.example;
 // El objetivo es que la clase jugador sea una clase que siga los parametros o indicaciones, o como se llame, de la POO.
 
+import java.awt.Color;
+
 // Entonces debe de resolver un error, y ser una caja cerrada, y no como la tenia antes. 
 
 import java.awt.Graphics2D;
@@ -20,7 +22,7 @@ public class Jugador {
 
     // Si y aumenta, bajas. Si y disminuye, subes (Lo habia hecho al reves)
 
-    public void moveUp(int limiteArriba) { // Limite para que la pala no pueda superar el limite impuesto que sera 0 
+    public void moveUp(int limiteArriba) { // Limite para que la pala no pueda superar el limite impuesto que sera 0
         y -= velocidad;
         if (y < limiteArriba) {
             y = limiteArriba;
@@ -38,6 +40,8 @@ public class Jugador {
     }
 
     public void draw(Graphics2D g) {
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, width, height);
         g.fillRect(x, y, width, height); // Paleta del jugador 1 c
     }
 
