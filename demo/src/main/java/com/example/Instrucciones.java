@@ -15,6 +15,7 @@ public class Instrucciones extends JFrame {
         setSize(400, 300); // poquito tamaño
         setLayout(new FlowLayout()); // flowlayout que me gusta jaja
         // las instrucciones de toda la vida solo que en catalan
+        setLocationRelativeTo(null);
         instrucciones = new JTextArea("Controles:\n" + "Jugador 1: W (amunt) / S (avall)\n"
                 + "Jugador 2: ↑ (amunt) / ↓ (avall)\n" + "Si la pilota surt per l'esquerra, punt per al Jugador 2.\n"
                 + "Si la pilota surt per la dreta, punt per al Jugador 1.");
@@ -28,6 +29,7 @@ public class Instrucciones extends JFrame {
                 dispose();
             }
         });
+
         setVisible(true);
     }
 }

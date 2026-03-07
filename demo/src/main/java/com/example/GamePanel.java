@@ -89,8 +89,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g2d.setFont(new Font("Arial", Font.BOLD, 30)); // ponemos una fuente, y buen tamaño para que se vea la
                                                        // puntuacion
         g2d.setColor(Color.WHITE);
-        g2d.drawString(nombre1 + score1, getWidth() / 4, 30);
-        g2d.drawString(nombre2 + score2, 3 * getWidth() / 4, 30);
+        g2d.drawString(nombre1 + " " + score1, getWidth() / 4, 30); // el " " es para que haya un espacio entre medias
+        g2d.drawString(nombre2 + " " + score2, 3 * getWidth() / 4, 30);
     }
 
     // Utilizamos los metodos especificos que tenemos en nuestra clase jugador, asi
