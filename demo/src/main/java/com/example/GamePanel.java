@@ -19,8 +19,8 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     private int x = 50, y = 50; // Coordenades inicials del cercle
-    private int dx = 4, dy = 4; // Velocitat del moviment en X i Y // Velocidad a 4 para mas velocidad
-    private final int RADI = 20; // Radi del cercle
+    private int dx = 5, dy = 5; // Velocitat del moviment en X i Y // Velocidad a 5 para mas velocidad
+    private final int RADI = 10; // Radi del cercle
     private final int DELAY = 10; // Retard del temporitzador en mil·lisegons
     private Timer timer; // Temporitzador per controlar l'animació
     private Jugador jugador1; // Juagdor Izquierda
@@ -49,8 +49,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         // iniciales de los jugadores,
         // tenemos que tenerlas en cuenta
         // La clase jugador ya tiene todo lo necesario jeje
-        jugador1 = new Jugador(25, 50, 50, 100, 15);
-        jugador2 = new Jugador(1450, 50, 50, 100, 15);
+        jugador1 = new Jugador(25, 50, 20, 80, 20); // ancho 20, alto 80
+        jugador2 = new Jugador(1450, 50, 20, 80, 20);
         try {
             fondo = ImageIO.read(new File("demo/assets/background/fondo.png"));
         } catch (IOException ex) {
@@ -140,6 +140,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             }
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 pausado = !pausado; // alterna entre true y false
+                // pausado = !pausado alterna el valor. Si estaba false, pasa a true. Si estaba
+                // true, pasa a false.
             }
             if (e.getKeyCode() == KeyEvent.VK_Q && pausado) {
                 // Cierra el juego y vuelve al menú

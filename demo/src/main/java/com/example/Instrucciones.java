@@ -18,7 +18,7 @@ public class Instrucciones extends JFrame {
         setLocationRelativeTo(null);
         instrucciones = new JTextArea("Controles:\n" + "Jugador 1: W (amunt) / S (avall)\n"
                 + "Jugador 2: ↑ (amunt) / ↓ (avall)\n" + "Si la pilota surt per l'esquerra, punt per al Jugador 2.\n"
-                + "Si la pilota surt per la dreta, punt per al Jugador 1.");
+                + "Si la pilota surt per la dreta, punt per al Jugador 1." + "\n\n Presiona ESC si vols pausar el lloc" + "\n Bona Sort! :D ~ David Gil");
         boton = new JButton("Tancar");
 
         add(instrucciones);
