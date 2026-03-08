@@ -50,6 +50,9 @@ public class MenuInicial extends JFrame {
         jugador2.setForeground(Color.WHITE);
         jugador2.setCaretColor(Color.WHITE);
 
+        botonIA = new JButton("Un Jugador"); // modo un jugador de toda la vida, asi esta mas completo
+        // espero que este sea el indicado para salir en la fiesta CIDE
+
         confirmar = new JButton("Començar"); // boton de començar
         instrucciones = new JButton("Instruccions"); // boton de instrucciones
 
@@ -69,9 +72,11 @@ public class MenuInicial extends JFrame {
         jugador2.setAlignmentX(CENTER_ALIGNMENT);
         confirmar.setAlignmentX(CENTER_ALIGNMENT);
         instrucciones.setAlignmentX(CENTER_ALIGNMENT);
+        botonIA.setAlignmentX(CENTER_ALIGNMENT);
 
         add(gifLabel); // Estan por orden
-        add(Box.createVerticalStrut(20)); // espacio de 20px ; si lo se, esto lo pude haber hecho mas sencillo pero el quick fixme los puso asi :D
+        add(Box.createVerticalStrut(20)); // espacio de 20px ; si lo se, esto lo pude haber hecho mas sencillo pero el
+                                          // quick fixme los puso asi :D
         add(campo);
         add(Box.createVerticalStrut(20)); // espacio de 20px
         add(jugador1);
@@ -81,6 +86,8 @@ public class MenuInicial extends JFrame {
         add(jugador2);
         add(Box.createVerticalStrut(20)); // espacio de 20px
         add(confirmar);
+        add(Box.createVerticalStrut(20)); // espacio de 20px
+        add(botonIA);
         add(Box.createVerticalStrut(20)); // espacio de 20px
         add(instrucciones);
 
@@ -101,7 +108,24 @@ public class MenuInicial extends JFrame {
                 dispose(); // dispose() libera los recursos de la ventana y la cierra.
 
                 JFrame frame = new JFrame("POOng! - David Gil");
-                GamePanel panel = new GamePanel(nombre1, nombre2);
+                GamePanel panel = new GamePanel(nombre1, nombre2, false);
+                frame.add(panel);
+                frame.setSize(1920, 1080);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
+
+        botonIA.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre1 = jugador1.getText();
+
+                dispose();
+
+                JFrame frame = new JFrame("POOng! - David Gil");
+                GamePanel panel = new GamePanel(nombre1, "IA", true); // true = modo IA
                 frame.add(panel);
                 frame.setSize(1920, 1080);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -31,11 +31,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private String nombre2; // jugador2
     private BufferedImage fondo; // para poner una imagen en el fondo personalizada jejeje vi un par de videos
     private boolean primerFrame = true; // para que la bola no aparezca en el 0,0
+    private boolean modoIA; // para saber si esta jugando en solitario o no
 
     // Constructor que inicialitza el panell i inicia el temporitzador
-    public GamePanel(String nombre1, String nombre2) {
+    public GamePanel(String nombre1, String nombre2, boolean modoIA) {
         this.nombre1 = nombre1;
         this.nombre2 = nombre2;
+        this.modoIA = modoIA;
         setBackground(Color.WHITE); // Defineix el color de fons del panell
         timer = new Timer(DELAY, this); // Crea el temporitzador amb retard especificat
         timer.start(); // Inicia el temporitzador
