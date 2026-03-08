@@ -15,6 +15,7 @@ public class MenuInicial extends JFrame {
     private JLabel campo2;
     private JButton confirmar;
     private JButton instrucciones;
+    private JButton botonIA; // es el modo de un jugador jeje
 
     public MenuInicial() {
         setTitle("POOng! - Menú");
