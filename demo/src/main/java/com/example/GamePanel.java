@@ -198,7 +198,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         x += dx;
         y += dy;
-
+        if (modoIA) { // modo un jugador
+            if (y > jugador2.getY() + jugador2.getHeight() / 2) {
+                jugador2.moveDown(getHeight()); // para que el jugador sepa donde va a ir la bola mas o menos no es IA, es mecanico
+            } else {
+                jugador2.moveUp(0);
+            }
+        }
         repaint();
 
     }
