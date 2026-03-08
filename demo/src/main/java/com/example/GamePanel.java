@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private BufferedImage fondo; // para poner una imagen en el fondo personalizada jejeje vi un par de videos
     private boolean primerFrame = true; // para que la bola no aparezca en el 0,0
     private boolean modoIA; // para saber si esta jugando en solitario o no
+    private boolean pausado = false; // variable para ver si el juego esta pausado o no
 
     // Constructor que inicialitza el panell i inicia el temporitzador
     public GamePanel(String nombre1, String nombre2, boolean modoIA) {
@@ -109,6 +110,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
              */
             g2d.drawString(ganador + " GUANYA!", getWidth() / 4, getHeight() / 2);
         }
+
+        if (pausado) {
+            g2d.setFont(new Font("Arial", Font.BOLD, 60));
+            g2d.setColor(Color.WHITE);
+            g2d.drawString("PAUSA", getWidth() / 3, getHeight() / 2);
+            g2d.setFont(new Font("Arial", Font.PLAIN, 20));
+            g2d.drawString("ESC - Reprendre", getWidth() / 3, getHeight() / 2 + 50);
+            g2d.drawString("Q - Sortir", getWidth() / 3, getHeight() / 2 + 80);
+        }
     }
 
     // Utilizamos los metodos especificos que tenemos en nuestra clase jugador, asi
@@ -129,8 +139,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 jugador2.moveDown(getHeight());
             }
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                score1 = 0;
-                score2 = 0;
+                pausado = !pausado; // alterna entre true y false
+            }
+            if (e.getKeyCode() == KeyEvent.VK_Q && pausado) {
+                // Cierra el juego y vuelve al menú
+                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                // SwingUtilities.getWindowAncestor(this) busca la ventana (JFrame) que contiene
+                // al componente actual (this = el GamePanel).
+                // Ya que GamePanel es un JPanel, no un JFrame
+                // Cuando quieres cerrar la ventana desde dentro del panel, necesitas encontrar
+                // primero el JFrame que lo contiene. Eso es lo que hace getWindowAncestor: sube
+                // por la jerarquía de componentes hasta encontrar la ventana padre.
+                frame.dispose();
+                new MenuInicial();
             }
             repaint();
         }
@@ -150,6 +171,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     // Este es el metodo para las colisiones
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        // Si pausado es true, el return salta todo
+        if (pausado)
+            return;
+
         // Limite de puntos, en cuanto uno de los dos llegue a 10 se para y se reinicia
         // el timer
         if (score1 >= 10 || score2 >= 10) {
