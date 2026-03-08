@@ -93,6 +93,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g2d.setColor(Color.WHITE);
         g2d.drawString(nombre1 + " " + score1, getWidth() / 4, 30); // el " " es para que haya un espacio entre medias
         g2d.drawString(nombre2 + " " + score2, 3 * getWidth() / 4, 30);
+
+        if (score1 >= 10 || score2 >= 10) { // Mostramos el mensaje de victoria del jugador que haya ganado
+            g2d.setFont(new Font("Arial", Font.BOLD, 60));
+            g2d.setColor(Color.WHITE);
+            String ganador = score1 >= 10 ? nombre1 : nombre2;
+            // el ? nombre1 : ; equivale a hacer esto:
+            /*
+             * String ganador;
+             * if (score1 >= 10) {
+             * ganador = nombre1;
+             * } else {
+             * ganador = nombre2;
+             * }
+             */
+            g2d.drawString(ganador + " GUANYA!", getWidth() / 4, getHeight() / 2);
+        }
     }
 
     // Utilizamos los metodos especificos que tenemos en nuestra clase jugador, asi
@@ -134,7 +150,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     // Este es el metodo para las colisiones
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // Limite de puntos, en cuanto uno de los dos llegue a 10 se para y se reinicia
+        // el timer
+        if (score1 >= 10 || score2 >= 10) {
+            timer.stop();
+            return;
+        }
         // Rebote vertical (techo y suelo)
         if (y + 2 * RADI >= getHeight() || y <= 0) {
             dy = -dy;
@@ -200,7 +221,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         y += dy;
         if (modoIA) { // modo un jugador
             if (y > jugador2.getY() + jugador2.getHeight() / 2) {
-                jugador2.moveDown(getHeight()); // para que el jugador sepa donde va a ir la bola mas o menos no es IA, es mecanico
+                jugador2.moveDown(getHeight()); // para que el jugador sepa donde va a ir la bola mas o menos no es IA,
+                                                // es mecanico
             } else {
                 jugador2.moveUp(0);
             }
